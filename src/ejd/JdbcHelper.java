@@ -21,10 +21,16 @@ public class JdbcHelper {
     
     ArrayList<Student> students = new ArrayList<>();
     
-    Connection conn = null;
-    Statement stmt = null;
-    ResultSet rs = null;
+    Connection conn ;
+    Statement stmt;
+    ResultSet rs ;
     int updateCount = 0;
+    
+       public JdbcHelper() {
+        conn = null;
+        stmt = null;
+        rs = null;
+    }
     
     public boolean connect(String url, String user, String pass) {
         

@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * @author yglee
  */
 public class Assignment1 {
-    //  ArrayList<Student> students = new ArrayList<>();
+   
 
     /**
      * @param args the command line arguments
@@ -21,6 +21,7 @@ public class Assignment1 {
         String url = "jdbc:mysql://localhost:3306/ejd";
         String user = "root";
         String pass = "1234";
+        
 
         Scanner in = new Scanner(System.in);
 
@@ -46,17 +47,17 @@ public class Assignment1 {
             if (1 == userInput) {
                 ResultSet resultSet = jh.query(query1);
                 System.out.println("*** Student in PROG10000 Course ***");
-                jh.printResult(resultSet);
+                printResult(resultSet);
             }
             if (2 == userInput) {
                 ResultSet resultSet = jh.query(query2);
                 System.out.println("*** Student in PROG20000 Course ***");
-                jh.printResult(resultSet);
+                printResult(resultSet);
             }
             if (3 == userInput) {
                 ResultSet resultSet = jh.query(query3);
                 System.out.println("*** Student in PROG30000 Course ***");
-                jh.printResult(resultSet);
+                printResult(resultSet);
             }
 
         } else {
@@ -66,4 +67,25 @@ public class Assignment1 {
         jh.diconnect();
     }
 
+     static void printResult(ResultSet resultSet) {
+         
+         ArrayList<Student> students = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+
+                students.add(new Student(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3)));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JdbcHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for (Student stdArray : students) {
+            System.out.println(stdArray.getId() + "\t" + stdArray.getFirstName() + "\t" + stdArray.getLastName());  // Will invoke overrided `toString()` method
+        }
+
+        students.clear();
+    }
+    
+    
 }
